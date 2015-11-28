@@ -25,13 +25,15 @@ namespace RendAR
   {
     glm::mat4 view, proj;
 
-    //view = camera_->GetViewMatrix();
-    //proj = camera_->GetViewMatrix();
+    if (camera_) {
+      view = camera_->GetViewMatrix();
+    }
 
     //ContextConfig config = Engine::context()->getContextConfig();
     //proj = glm::perspective(45.0f, (float)(config.width / config.height), 0.1f, 100.0f);
+    proj = glm::perspective(45.0f, (float)(800 / 600), 0.1f, 100.0f);
 
     for (auto o : objects_)
-      o->render();
+      o->render(view, proj);
   }
 }

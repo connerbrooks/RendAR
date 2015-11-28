@@ -19,6 +19,7 @@ namespace RendAR
     void setVertices(const std::vector<GLfloat>& vertices,
                      const std::vector<GLfloat>& normals);
     void setShader(const Shader& shader);
+    void setColor(const glm::vec3& color);
     virtual void render(glm::mat4& view, glm::mat4& proj) = 0;
 
   protected:
@@ -27,11 +28,14 @@ namespace RendAR
     std::vector<GLfloat> normals_;
 
     Shader shader_;
+    glm::vec3 color_;
     GLuint VBO, VAO;
 
     GLint uniform_model_;
     GLint uniform_view_;
     GLint uniform_projection_;
     GLint uniform_color_;
+
+    bool wireframe_ = false;
   };
 }

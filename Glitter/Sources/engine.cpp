@@ -25,7 +25,6 @@ namespace RendAR
 
   void Engine::render()
   {
-    //instance->scene_->render(&instance->engineUniforms);
     instance->scene_->render();
     instance->context_->swapBuffers();
   }

@@ -13,8 +13,10 @@ using namespace RendAR;
 
 Camera* camera;
 Cube* cube;
+
 GLfloat lastX = 400, lastY = 400;
 bool keys[1024];
+
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
@@ -47,7 +49,6 @@ void updateLoop()
   // rotate around axis
   glm::vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
   cube->SetRotation(glm::quat(EulerAngles));
-
 }
 
 void

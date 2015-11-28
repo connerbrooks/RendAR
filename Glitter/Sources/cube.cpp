@@ -88,6 +88,9 @@ namespace RendAR {
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
+    if (wireframe_)
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     glBindVertexArray(VAO);
     glm::mat4 model = GetTransformationMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

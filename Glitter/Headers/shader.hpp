@@ -22,14 +22,6 @@ public:
     std::string vertexCode;
     std::string fragmentCode;
 
-    char cCurrentPath[FILENAME_MAX];
-    if (!getcwd(cCurrentPath, sizeof(cCurrentPath)))
-    {
-      std::cout << "error could not get directory\n";
-    }
-
-    //std::cout << std::string(cCurrentPath) << "\n";
-
     try
     {
       std::ifstream vShaderFile(vertexPath);

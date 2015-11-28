@@ -26,4 +26,9 @@ namespace RendAR {
   {
     shader_ = shader;
   }
+
+  void Object::setColor(const glm::vec3& color)
+  {
+    color_ = color;
+  }
 }

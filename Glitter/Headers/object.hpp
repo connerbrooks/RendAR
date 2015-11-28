@@ -21,21 +21,17 @@ namespace RendAR
     void setShader(const Shader& shader);
     virtual void render(glm::mat4& view, glm::mat4& proj) = 0;
 
-    Shader shader_;
-    GLuint VBO, VAO;
-
-  private:
+  protected:
     std::vector<GLushort> indices_;
     std::vector<GLfloat> vertices_;
     std::vector<GLfloat> normals_;
 
+    Shader shader_;
+    GLuint VBO, VAO;
+
     GLint uniform_model_;
     GLint uniform_view_;
     GLint uniform_projection_;
-    //GLint uniform_color_;
-
-    //glm::vec3 position_;
-    //virtual void render() = 0;
-
+    GLint uniform_color_;
   };
 }

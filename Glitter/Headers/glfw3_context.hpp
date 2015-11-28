@@ -14,8 +14,11 @@ namespace RendAR {
     virtual ~GLFW3Context();
     virtual bool init(int &argc, char **argv) override;
     virtual void showWindow() override;
-    virtual void mainLoop() override;
+    virtual void mainLoop(void (*updateLoop)()) override;
     virtual void swapBuffers() override;
+
+    void setKeyCallBack(void (*cb)(GLFWwindow*, int, int, int, int));
+    void setCursorPosCallback(void (*cb)(GLFWwindow *, double, double));
 
   private:
     GLFWwindow *window_;

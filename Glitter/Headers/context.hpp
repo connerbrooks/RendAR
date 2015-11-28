@@ -12,7 +12,7 @@ namespace RendAR
     virtual ~Context(){};
     virtual bool init(int &argc, char **argv) = 0;
     virtual void showWindow() = 0;
-    virtual void mainLoop() = 0;
+    virtual void mainLoop(void (*updateLoop)()) = 0;
     virtual void swapBuffers() = 0;
   };
 }

@@ -13,9 +13,9 @@ namespace RendAR
     createScene("default");
   }
 
-  void Engine::startMainLoop()
+  void Engine::startMainLoop(void (*updateLoop)())
   {
-    instance->context_->mainLoop();
+    instance->context_->mainLoop(updateLoop);
   }
 
   void Engine::update()

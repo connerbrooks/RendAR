@@ -22,7 +22,6 @@ const GLfloat SPEED = 3.0f;
 const GLfloat SENSITIVITY = 0.025f;
 const GLfloat ZOOM = 0.25f;
 
-
 class Camera
 {
 public:

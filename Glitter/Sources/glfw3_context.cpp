@@ -37,7 +37,7 @@ namespace RendAR {
   }
 
 
-  void GLFW3Context::mainLoop()
+  void GLFW3Context::mainLoop(void (*updateLoop)())
   {
     while (glfwWindowShouldClose(window_) == false) {
       if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -47,6 +47,8 @@ namespace RendAR {
       glClear(GL_COLOR_BUFFER_BIT);
 
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+      updateLoop();
 
       Engine::update();
       Engine::render();
@@ -59,5 +61,16 @@ namespace RendAR {
   {
     glfwSwapBuffers(window_);
     glfwPollEvents();
+  }
+
+  void GLFW3Context::setKeyCallBack(void (*cb)(GLFWwindow*, int, int, int, int))
+  {
+    glfwSetKeyCallback(window_, cb);
+  }
+
+
+  void GLFW3Context::setCursorPosCallback(void (*cb)(GLFWwindow *, double, double))
+  {
+    glfwSetCursorPosCallback(window_, cb);
   }
 }

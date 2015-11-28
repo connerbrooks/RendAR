@@ -31,7 +31,7 @@ namespace RendAR
 
     //ContextConfig config = Engine::context()->getContextConfig();
     //proj = glm::perspective(45.0f, (float)(config.width / config.height), 0.1f, 100.0f);
-    proj = glm::perspective(45.0f, (float)(800 / 600), 0.1f, 100.0f);
+    proj = glm::perspective(45.0f, (float)(800.0 / 600.0), 0.1f, 100.0f);
 
     for (auto o : objects_)
       o->render(view, proj);

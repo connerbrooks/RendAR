@@ -39,4 +39,4 @@ class Transform {
   glm::quat rotation_;
   glm::vec3 scale_;
 };
-}  
+}

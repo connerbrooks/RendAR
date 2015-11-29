@@ -2,38 +2,41 @@
 
 namespace RendAR {
 
-  GLFW3Context::GLFW3Context(int width, int height) 
-    : width_(width), height_(height)
-  {}
-
   GLFW3Context::GLFW3Context()
   {}
 
-  GLFW3Context::~GLFW3Context() 
+  GLFW3Context::~GLFW3Context()
   {}
 
-  bool GLFW3Context::init(int &argc, char **argv)
+  bool GLFW3Context::init(int &argc, char **argv, const ContextConfig& config)
   {
+    config_ = config;
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    window_ = glfwCreateWindow(width_, height_, "OpenGL", nullptr, nullptr);
+
+    return 1;
+  }
+
+  bool GLFW3Context::showWindow()
+  {
+
+    window_ = glfwCreateWindow(config_.width, config_.height, config_.name.c_str(), nullptr, nullptr);
 
     if (window_ == nullptr) {
       fprintf(stderr, "Failed to Create OpenGL Context");
       return 0;
     }
-    return 1;
-  }
 
-  void GLFW3Context::showWindow()
-  {
     glfwMakeContextCurrent(window_);
     gladLoadGL();
     fprintf(stderr, "OpenGL %s\n", glGetString(GL_VERSION));
+
+    return 1;
   }
 
 

@@ -3,16 +3,13 @@
 #include "scene.hpp"
 #include "object.hpp"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <string>
 
 namespace RendAR
 {
   class Engine {
   public:
-    static void init(int& argc, char **argv);
+    static void init(int& argc, char **argv, const ContextConfig& config = ContextConfig::plain);
     static Scene* createScene(const std::string &name);
     static Context* context();
     static void startMainLoop(void (*updateLoop)());
@@ -22,7 +19,7 @@ namespace RendAR
 
   private:
     static Engine* instance;
-    Engine(int& argc, char** argv);
+    Engine(int& argc, char** argv, const ContextConfig& config = ContextConfig::plain);
     Context *context_ = nullptr;
     Scene *scene_ = nullptr;
   };

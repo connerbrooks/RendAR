@@ -3,9 +3,6 @@
 #include "camera.hpp"
 #include "context_config.hpp"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/quaternion.hpp"
-
 #include <string>
 #include <vector>
 

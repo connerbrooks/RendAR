@@ -1,5 +1,4 @@
 #include "scene.hpp"
-
 #include "engine.hpp"
 
 namespace RendAR
@@ -29,9 +28,8 @@ namespace RendAR
       view = camera_->GetViewMatrix();
     }
 
-    //ContextConfig config = Engine::context()->getContextConfig();
-    //proj = glm::perspective(45.0f, (float)(config.width / config.height), 0.1f, 100.0f);
-    proj = glm::perspective(45.0f, (float)(800.0 / 600.0), 0.1f, 100.0f);
+    ContextConfig config = Engine::context()->getContextConfig();
+    proj = glm::perspective(45.0f, ((GLfloat)config.width / (GLfloat)config.height), 0.1f, 100.0f);
 
     for (auto o : objects_)
       o->render(view, proj);

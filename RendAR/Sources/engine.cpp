@@ -4,11 +4,11 @@ namespace RendAR
 {
   Engine* Engine::instance = nullptr;
 
-  Engine::Engine(int& argc, char** argv)
+  Engine::Engine(int& argc, char** argv, const ContextConfig& config)
     : context_(new GLFW3Context())
   {
     instance = this;
-    context_->init(argc, argv);
+    context_->init(argc, argv, config);
     context_->showWindow();
     createScene("default");
   }
@@ -29,12 +29,13 @@ namespace RendAR
     instance->context_->swapBuffers();
   }
 
-  Context* Engine::context(){
+  Context*
+  Engine::context(){
     return instance->context_;
   }
 
   void
-  Engine::init(int& argc, char **argv)
+  Engine::init(int& argc, char **argv, const ContextConfig& config)
   {
     assert(instance == nullptr);
     new Engine(argc, argv);

@@ -1,19 +1,19 @@
-# [Glitter](http://polytonic.github.io/Glitter/)
-![Screenshot](http://i.imgur.com/MDo2rsy.jpg)
+RendAR
+======
 
-## Summary
-Glitter is a dead simple boilerplate for OpenGL, intended as a starting point for the tutorials on [learnopengl.com](http://www.learnopengl.com) and [open.gl](https://open.gl). Glitter compiles and statically links every required library, so you can jump right into doing what you probably want: how to get started with OpenGL.
-
-## Getting Started
-Glitter has a single dependency: [cmake](http://www.cmake.org/download/), which is used to generate platform-specific makefiles or project files. Start by cloning this repository, making sure to pass the `--recursive` flag to grab all the dependencies. If you forgot, then you can `git submodule update --init` instead.
+Getting Started
+---------------
+Like [Glitter](http://polytonic.github.io/Glitter/) RendAR only depends on
+[cmake](http://www.cmake.org/download/), which generates projects or makefiles
+for your platform. Clone the repository recursively
 
 ```bash
-git clone --recursive https://github.com/Polytonic/Glitter
-cd Glitter
+git clone --recursive https://github.com/connerbrooks/RendAR.git
+cd RendAR
 cd Build
 ```
 
-Now generate a project file or makefile for your platform. If you want to use a particular IDE, make sure it is installed; don't forget to set the Start-Up Project in Visual Studio or the Target in Xcode.
+Generate a project or Makefile for your platform:
 
 ```bash
 # UNIX Makefile
@@ -28,33 +28,42 @@ cmake -G "Visual Studio 14 Win64" ..
 ...
 ```
 
-If you compile and run, you should now be at the same point as the [Hello Window](http://www.learnopengl.com/#!Getting-started/Hello-Window) or [Context Creation](https://open.gl/context) sections of the tutorials. Open [main.cpp](https://github.com/Polytonic/Glitter/blob/master/Glitter/Sources/main.cpp) on your computer and start writing code!
+Compile and run, the test project will create some objects and a camera.
+The camera can be controlled with `WASD` and the mouse.
 
-## Documentation
-Many people overlook how frustrating it is to install dependencies, especially in environments lacking package managers or administrative privileges. For beginners, just getting set up properly set up can be a huge challenge. Glitter is meant to help you overcome that roadblock.
 
-Glitter provides the most basic windowing example. It is a starting point, and tries very hard not to enforce any sort of directory structure. Feel free to edit the include paths in `CMakeLists.txt`. Glitter bundles most of the dependencies needed to implement a basic rendering engine. This includes:
+Usage
+-----
 
-Functionality           | Library
------------------------ | ------------------------------------------
-Mesh Loading            | [assimp](https://github.com/assimp/assimp)
-Physics                 | [bullet](https://github.com/bulletphysics/bullet3)
-OpenGL Function Loader  | [glad](https://github.com/Dav1dde/glad)
-Windowing and Input     | [glfw](https://github.com/glfw/glfw)
-OpenGL Mathematics      | [glm](https://github.com/g-truc/glm)
-Texture Loading         | [stb](https://github.com/nothings/stb)
+```
+#include "rendar.h"
 
-If you started the tutorials by installing [SDL](https://www.libsdl.org/), [GLEW](https://github.com/nigels-com/glew), or [SOIL](http://www.lonesock.net/soil.html), *stop*. The libraries bundled with Glitter supersede or are functional replacements for these libraries.
+using namespace RendAR;
+using namespace glm;
 
-I have provided sample implementations of an intrusive tree mesh and shader class, if you're following along with the tutorials and need another reference point. These were used to generate the screenshot above, but will not compile out-of-the-box. I leave that exercise for the reader. :smiley:
+Cube *cube;
 
-## License
->The MIT License (MIT)
+void
+updateLoop()
+{
+  // rotate cube
+  vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
+  cube->SetRotation(quat(EulerAngles));
+}
 
->Copyright (c) 2015 Kevin Fung
+int
+main(int argc, char *argv[])
+{
+  Engine::init(argc, argv);
+  Scene *scene = Engine::activeScene();
+  Camera *camera = new Camera(vec3(0.0, 0.0, 3.0));
+  scene->setCamera(camera);
 
->Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  cube = new Cube();
+  cube1->SetPosition(glm::vec3(-1.0f, -0.4f, -3.0f));
 
->The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  scene->add(cube);
 
->THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  Engine::startMainLoop(&updateLoop);
+}
+```

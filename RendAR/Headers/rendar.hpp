@@ -1,6 +1,6 @@
 // Preprocessor Directives
-#ifndef GLITTER
-#define GLITTER
+#ifndef RENDAR
+#define RENDAR
 #pragma once
 
 // System Headers
@@ -25,4 +25,4 @@
 const int mWidth = 1280;
 const int mHeight = 800;
 
-#endif //~ Glitter Header
+#endif //~ RendAR Header

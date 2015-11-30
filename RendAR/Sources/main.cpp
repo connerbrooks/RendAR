@@ -3,6 +3,7 @@
 #include "engine.hpp"
 #include "camera.hpp"
 #include "cube.hpp"
+#include "light.hpp"
 
 // Standard Headers
 #include <cstdio>
@@ -13,6 +14,7 @@ using namespace glm;
 
 Camera* camera;
 Cube* cube;
+Light* light;
 
 GLfloat lastX = 400, lastY = 400;
 bool keys[1024];
@@ -45,7 +47,9 @@ void updateLoop()
   do_movement();
 
   // move cube away
-  cube->SetPosition(vec3(-(GLfloat)glfwGetTime() / 5.0, 0.0f, 0.0f));
+  //cube->SetPosition(vec3(-(GLfloat)glfwGetTime() / 5.0, 0.0f, 0.0f));
+
+  light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f, sin(glfwGetTime() / 2.0f) * 1.0f, 0.0f));
 
   // rotate around axis
   vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
@@ -100,12 +104,20 @@ int main(int argc, char * argv[]) {
 
   scene->setCamera(camera);
 
+  light = new Light();
+  light->SetPosition(vec3(0.0f, 3.0f, 0.0f));
+
   cube = new Cube();
-  Cube* cube1 = new Cube();
-  cube->SetPosition(vec3(0.0f, 0.0f, 0.0f));
-  cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
+  cube->SetPosition(vec3(0.0f, 0.0f, 1.0f));
+
+
   scene->add(cube);
-  scene->add(cube1);
+  scene->add(light);
+
+  //Cube* cube1 = new Cube();
+  //cube->SetPosition(vec3(0.0f, 0.0f, 0.0f));
+  //cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
+  //scene->add(cube1);
 
   Engine::startMainLoop(&updateLoop);
 }

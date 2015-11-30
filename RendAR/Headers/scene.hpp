@@ -1,6 +1,7 @@
 #pragma once
 #include "object.hpp"
 #include "camera.hpp"
+#include "light.hpp"
 #include "context_config.hpp"
 
 #include <string>
@@ -14,12 +15,14 @@ namespace RendAR
     ~Scene();
     void add(Object* o);
     void setCamera(Camera *cam);
+    Camera* getCamera();
     void render();
-
+    std::vector<Object*> getSceneObjects();
+    std::vector<Light*> getLights();
   private:
-    Camera* camera_;
     std::string name_;
+    Camera* camera_;
     std::vector<Object*> objects_;
-
+    std::vector<Light*> lights_;
   };
 }

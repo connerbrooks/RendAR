@@ -10,13 +10,22 @@ namespace RendAR
   void
   Scene::add(Object* o)
   {
-    objects_.push_back(o);
+    if (dynamic_cast<Light *>(o))
+      lights_.push_back(dynamic_cast<Light *>(o));
+    else
+        objects_.push_back(o);
   }
 
   void
   Scene::setCamera(Camera* cam)
   {
     camera_ = cam;
+  }
+
+  Camera*
+  Scene::getCamera()
+  {
+    return camera_;
   }
 
   void
@@ -33,5 +42,21 @@ namespace RendAR
 
     for (auto o : objects_)
       o->render(view, proj);
+
+    for (auto l : lights_)
+      l->render(view, proj);
+
+  }
+
+  std::vector<Object*>
+  Scene::getSceneObjects()
+  {
+    return objects_;
+  }
+
+  std::vector<Light*>
+  Scene::getLights()
+  {
+    return lights_;
   }
 }

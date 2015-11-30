@@ -36,6 +36,8 @@ namespace RendAR {
     gladLoadGL();
     fprintf(stderr, "OpenGL %s\n", glGetString(GL_VERSION));
 
+    glEnable(GL_DEPTH_TEST);
+
     return 1;
   }
 
@@ -47,7 +49,7 @@ namespace RendAR {
         glfwSetWindowShouldClose(window_, true);
 
       glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       updateLoop();
 

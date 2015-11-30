@@ -8,8 +8,8 @@
 #include <cstdio>
 #include <cstdlib>
 
-
 using namespace RendAR;
+using namespace glm;
 
 Camera* camera;
 Cube* cube;
@@ -38,17 +38,18 @@ void do_movement()
  */
 void updateLoop()
 {
+  // camera updates
   GLfloat currentFrame = glfwGetTime();
   deltaTime = currentFrame - lastFrame;
   lastFrame = currentFrame;
   do_movement();
 
-  // move cube away 
-  cube->SetPosition(glm::vec3(-(GLfloat)glfwGetTime() / 5.0, 0.0f, 0.0f));
+  // move cube away
+  cube->SetPosition(vec3(-(GLfloat)glfwGetTime() / 5.0, 0.0f, 0.0f));
 
   // rotate around axis
-  glm::vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
-  cube->SetRotation(glm::quat(EulerAngles));
+  vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
+  cube->SetRotation(quat(EulerAngles));
 }
 
 void
@@ -70,9 +71,7 @@ bool firstMouse = true;
 void
 mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
-
-  if (firstMouse)
-  {
+  if (firstMouse) {
     lastX = xpos;
     lastY = ypos;
     firstMouse = false;
@@ -97,14 +96,14 @@ int main(int argc, char * argv[]) {
   glfw_context->setCursorPosCallback(&mouse_callback);
 
   Scene* scene = Engine::activeScene();
-  camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+  camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 
   scene->setCamera(camera);
 
   cube = new Cube();
   Cube* cube1 = new Cube();
-  cube->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-  cube1->SetPosition(glm::vec3(-1.0f, -0.4f, -3.0f));
+  cube->SetPosition(vec3(0.0f, 0.0f, 0.0f));
+  cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
   scene->add(cube);
   scene->add(cube1);
 

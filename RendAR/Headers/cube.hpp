@@ -1,13 +1,10 @@
 #pragma once
-#include "object.hpp"
+#include "mesh.hpp"
 
-namespace RendAR
-{
-  class Cube : public Object {
+namespace RendAR {
+  class Cube : public Mesh {
   public:
     Cube();
-    ~Cube();
-
-    virtual void render(glm::mat4& view, glm::mat4& proj) override;
+    ~Cube() {};
   };
 }

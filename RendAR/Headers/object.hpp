@@ -22,14 +22,16 @@ namespace RendAR
     void setColor(const glm::vec3& color);
     virtual void render(glm::mat4& view, glm::mat4& proj) = 0;
 
+
   protected:
     std::vector<GLushort> indices_;
     std::vector<GLfloat> vertices_;
     std::vector<GLfloat> normals_;
 
     Shader shader_;
-    glm::vec3 color_;
     GLuint VBO, VAO;
+
+    glm::vec3 color_;
 
     GLint uniform_model_;
     GLint uniform_view_;

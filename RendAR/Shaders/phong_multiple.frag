@@ -1,4 +1,22 @@
 #version 330 core
+struct Material {
+    sampler2D diffuse;
+    sampler2D specular;
+    float shininess;
+};
+
+struct PointLight {
+    vec3 position;
+    
+    float constant;
+    float linear;
+    float quadratic;
+	
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
 out vec4 color;
 
 in vec3 FragPos;
@@ -11,7 +29,9 @@ uniform vec3 lightColor;
 uniform vec3 objectColor;
 
 void main() {
-  float ambientStrength = 0.3f;
+
+
+  float ambientStrength = 0.1f;
   vec3 ambient = ambientStrength * lightColor;
 
   vec3 norm = normalize(Normal);

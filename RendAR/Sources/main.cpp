@@ -114,10 +114,10 @@ int main(int argc, char * argv[]) {
   scene->add(cube);
   scene->add(light);
 
-  //Cube* cube1 = new Cube();
-  //cube->SetPosition(vec3(0.0f, 0.0f, 0.0f));
-  //cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
-  //scene->add(cube1);
+  Cube* cube1 = new Cube();
+  cube1->setShader(Shader("Shaders/default.vert", "Shaders/default.frag"));
+  cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
+  scene->add(cube1);
 
   Engine::startMainLoop(&updateLoop);
 }

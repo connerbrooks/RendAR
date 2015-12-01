@@ -99,6 +99,8 @@ int main(int argc, char * argv[]) {
   glfw_context->setKeyCallBack(&key_callback);
   glfw_context->setCursorPosCallback(&mouse_callback);
 
+  glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
+
   Scene* scene = Engine::activeScene();
   camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 
@@ -108,15 +110,17 @@ int main(int argc, char * argv[]) {
   light->SetPosition(vec3(0.0f, 3.0f, 0.0f));
 
   cube = new Cube();
-  cube->SetPosition(vec3(0.0f, 0.0f, 1.0f));
+  cube->SetPosition(vec3(0.0f, 0.0f, 2.0f));
 
 
   scene->add(cube);
   scene->add(light);
 
   Cube* cube1 = new Cube();
+  cube1->setWireframe(true);
   cube1->setShader(Shader("Shaders/default.vert", "Shaders/default.frag"));
   cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
+  cube1->setColor(vec3(0.9f, 0.1f, .45f));
   scene->add(cube1);
 
   Engine::startMainLoop(&updateLoop);

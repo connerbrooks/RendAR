@@ -7,10 +7,7 @@ namespace RendAR
   public:
     Mesh();
     ~Mesh();
-
+    void initBuffers();
     virtual void render(glm::mat4& view, glm::mat4& proj) override;
-
-  protected:
-
   };
 }

@@ -1,8 +1,8 @@
 #pragma once
-#include "mesh.hpp"
+#include "cube.hpp"
 
 namespace RendAR {
-  class Light : public Mesh {
+  class Light : public Cube {
   public:
     Light();
     ~Light() {};

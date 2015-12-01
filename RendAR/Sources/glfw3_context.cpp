@@ -48,7 +48,7 @@ namespace RendAR {
       if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window_, true);
 
-      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+      glClearColor(clear_color_.x, clear_color_.y, clear_color_.z, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       updateLoop();

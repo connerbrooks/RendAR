@@ -44,7 +44,8 @@ namespace RendAR
       o->render(view, proj);
 
     for (auto l : lights_)
-      l->render(view, proj);
+      if (lights_.size() < 4)
+        l->render(view, proj);
 
   }
 

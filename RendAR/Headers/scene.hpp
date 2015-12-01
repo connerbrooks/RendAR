@@ -24,5 +24,6 @@ namespace RendAR
     Camera* camera_;
     std::vector<Object*> objects_;
     std::vector<Light*> lights_;
+    const int MAX_LIGHTS = 4;
   };
 }

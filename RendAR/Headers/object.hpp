@@ -20,8 +20,10 @@ namespace RendAR
                      const std::vector<GLfloat>& normals);
     void setShader(const Shader& shader);
     void setColor(const glm::vec3& color);
+    glm::vec3 getColor();
     virtual void render(glm::mat4& view, glm::mat4& proj) = 0;
 
+    void setWireframe(bool w);
 
   protected:
     std::vector<GLushort> indices_;
@@ -29,14 +31,21 @@ namespace RendAR
     std::vector<GLfloat> normals_;
 
     Shader shader_;
-    GLuint VBO, VAO;
+    GLuint VBO_, VAO_;
+
+    bool isInitialized_ = false;
+    bool hasNormals_ = false;
 
     glm::vec3 color_;
 
+    GLenum render_mode_;
     GLint uniform_model_;
     GLint uniform_view_;
     GLint uniform_projection_;
     GLint uniform_color_;
+
+    GLint vertex_attrib_ = 0;
+    GLint normal_attrib_ = 1;
 
     bool wireframe_ = false;
   };

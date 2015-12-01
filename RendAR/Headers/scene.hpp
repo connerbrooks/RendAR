@@ -14,10 +14,11 @@ namespace RendAR
     Scene(std::string name);
     ~Scene();
     void add(Object* o);
+    void add(Light* l);
     void setCamera(Camera *cam);
     Camera* getCamera();
     void render();
-    std::vector<Object*> getSceneObjects();
+    std::vector<Object*> getObjects();
     std::vector<Light*> getLights();
   private:
     std::string name_;

@@ -20,6 +20,12 @@ namespace RendAR
   }
 
   void
+  Scene::add(Model* model)
+  {
+    models_.push_back(model);
+  }
+
+  void
   Scene::setCamera(Camera* cam)
   {
     camera_ = cam;
@@ -63,6 +69,9 @@ namespace RendAR
     for (auto l : lights_)
       if (lights_.size() < MAX_LIGHTS)
         l->render(view, proj);
+
+    for (auto m : models_)
+      m->render(view, proj);
 
   }
 

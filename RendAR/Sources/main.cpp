@@ -4,6 +4,7 @@
 #include "camera.hpp"
 #include "cube.hpp"
 #include "light.hpp"
+#include "model.hpp"
 
 // Standard Headers
 #include <cstdio>
@@ -46,14 +47,14 @@ void updateLoop()
   lastFrame = currentFrame;
   do_movement();
 
-  light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
-                          sin(glfwGetTime() / 2.0f) * 1.0f,
-                          0.0f));
+  //light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
+  //                        sin(glfwGetTime() / 2.0f) * 1.0f,
+  //                        0.0f));
 
   // rotate around axis
-  vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
-  cube->SetRotation(quat(EulerAngles));
-  cube1->SetRotation(quat(EulerAngles));
+  //vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
+  //cube->SetRotation(quat(EulerAngles));
+  //cube1->SetRotation(quat(EulerAngles));
 }
 
 int main(int argc, char * argv[]) {
@@ -69,9 +70,9 @@ int main(int argc, char * argv[]) {
 
   Scene* scene = Engine::activeScene();
   camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
-
   scene->setCamera(camera);
 
+  /*
   light = new Light();
   light->SetPosition(vec3(0.0f, 3.0f, 0.0f));
 
@@ -94,6 +95,10 @@ int main(int argc, char * argv[]) {
   scene->add(cube);
   scene->add(cube1);
   scene->add(light);
+  */
+
+  Model *model = new Model("nanosuit/nanosuit.obj");
+  scene->add(model);
 
   Engine::startMainLoop(&updateLoop);
 }

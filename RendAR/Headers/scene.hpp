@@ -3,6 +3,7 @@
 #include "camera.hpp"
 #include "light.hpp"
 #include "context_config.hpp"
+#include "model.hpp"
 
 #include <string>
 #include <vector>
@@ -15,6 +16,7 @@ namespace RendAR
     ~Scene();
     void add(Object* o);
     void add(Light* l);
+    void add(Model* l);
     void setCamera(Camera *cam);
     Camera* getCamera();
     void render();
@@ -25,6 +27,7 @@ namespace RendAR
     Camera* camera_;
     std::vector<Object*> objects_;
     std::vector<Light*> lights_;
+    std::vector<Model*> models_;
     const int MAX_LIGHTS = 4;
   };
 }

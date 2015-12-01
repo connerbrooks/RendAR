@@ -142,7 +142,18 @@ namespace RendAR {
             vertices,
             vertices + sizeof(vertices) / sizeof(GLfloat));
 
-      setVertices(verts);
+
+      /*
+      for (GLuint i = 0; i < sizeof(vertices) / sizeof(GLfloat) - 6; i+=6) {
+        glm::vec3 v;
+        v.x = vertices[i];
+        v.y = vertices[i] + 1;
+
+      }
+      */
+
+
+      //setVertices(verts);
       // let render know that there are normals
       // TODO: more elegant soln
       hasNormals_ = true;

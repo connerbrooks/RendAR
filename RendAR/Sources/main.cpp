@@ -18,6 +18,7 @@ Camera* camera;
 Cube* cube;
 Cube* cube1;
 Light* light;
+Model* model;
 
 // controls
 GLfloat lastX = 400, lastY = 400;
@@ -54,7 +55,7 @@ void updateLoop()
   // rotate around axis
   //vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
   //cube->SetRotation(quat(EulerAngles));
-  //cube1->SetRotation(quat(EulerAngles));
+  //model->SetRotation(quat(EulerAngles));
 }
 
 int main(int argc, char * argv[]) {
@@ -97,7 +98,7 @@ int main(int argc, char * argv[]) {
   scene->add(light);
   */
 
-  Model *model = new Model("nanosuit/nanosuit.obj");
+  model = new Model("nanosuit/nanosuit.obj");
   scene->add(model);
 
   Engine::startMainLoop(&updateLoop);

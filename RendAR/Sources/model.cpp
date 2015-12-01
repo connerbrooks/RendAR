@@ -3,12 +3,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
 namespace RendAR {
   void Model::render(glm::mat4& view, glm::mat4& proj)
   {
-    //for (int i = 0; i < meshes_.size(); i++)
-    //  meshes_[i].render(view, proj);
     for (auto m : meshes_)
       m->render(view, proj);
   }
@@ -79,10 +76,20 @@ namespace RendAR {
 
     if (mesh->mMaterialIndex >= 0) {
       aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-      std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-      textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-      std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-      textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+      std::vector<Texture> diffuseMaps
+        = loadMaterialTextures(material,
+                               aiTextureType_DIFFUSE,
+                               "texture_diffuse");
+      textures.insert(textures.end(),
+                      diffuseMaps.begin(),
+                      diffuseMaps.end());
+      std::vector<Texture> specularMaps
+        = loadMaterialTextures(material,
+                               aiTextureType_SPECULAR,
+                               "texture_specular");
+      textures.insert(textures.end(),
+                      specularMaps.begin(),
+                      specularMaps.end());
 
     }
 
@@ -111,13 +118,12 @@ namespace RendAR {
 
   GLint TextureFromFile(const char* path, std::string directory)
   {
-    //Generate texture ID and load texture data 
+    //Generate texture ID and load texture data
     std::string filename = std::string(path);
     filename = directory + '/' + filename;
     GLuint textureID;
     glGenTextures(1, &textureID);
     int width,height,channels;
-    //unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
     unsigned char* image = stbi_load(filename.c_str(), &width, &height, &channels, 0);
 
     GLenum format;
@@ -139,7 +145,6 @@ namespace RendAR {
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, 0);
-    //SOIL_free_image_data(image);
     stbi_image_free(image);
     return textureID;
   }

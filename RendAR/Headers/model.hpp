@@ -5,17 +5,15 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "stb_image.h"
-
 namespace RendAR {
-  class Model {
+  class Model : public Object {
   public:
     Model(std::string path)
     {
       loadModel(path);
     }
 
-    void render(glm::mat4& view, glm::mat4& proj);
+    void render(glm::mat4& view, glm::mat4& proj) override;
 
   protected:
     std::vector<Mesh*> meshes_;

@@ -116,18 +116,19 @@ namespace RendAR {
 
     // only 1 point light supported currently
     if (lights.size() != 0) {
-        GLint lightColorLoc  = glGetUniformLocation(shader_.Program, "lightColor");
-        GLint lightPosLoc    = glGetUniformLocation(shader_.Program, "lightPos");
-        GLint viewPosLoc     = glGetUniformLocation(shader_.Program, "viewPos");
+      GLint lightColorLoc  = glGetUniformLocation(shader_.Program, "lightColor");
+      GLint lightPosLoc    = glGetUniformLocation(shader_.Program, "lightPos");
+      GLint viewPosLoc     = glGetUniformLocation(shader_.Program, "viewPos");
 
-        glm::vec3 lightColor = lights[0]->getColor();
-        glm::vec3 lightPosition = lights[0]->GetPosition();
-        Camera *cam = Engine::activeScene()->getCamera();
+      glm::vec3 lightColor = lights[0]->getColor();
+      glm::vec3 lightPosition = lights[0]->GetPosition();
+      ARCamera *cam = Engine::activeScene()->getCamera();
 
-        // lighting uniforms
-        glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);
-        glUniform3f(lightPosLoc, lightPosition.x, lightPosition.y, lightPosition.y);
-        glUniform3f(viewPosLoc, cam->Position.x, cam->Position.y, cam->Position.z);
+      // lighting uniforms
+      glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);
+      glUniform3f(lightPosLoc, lightPosition.x, lightPosition.y, lightPosition.y);
+      glm::vec3 camPos = cam->GetPosition();
+      glUniform3f(viewPosLoc, camPos.x, camPos.y, camPos.z);
     }
 
     // set color uniform

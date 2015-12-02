@@ -4,17 +4,31 @@
 #include "camera.hpp"
 #include "cube.hpp"
 #include "light.hpp"
+<<<<<<< HEAD
 #include "model.hpp"
+=======
+#include "ar_camera.hpp"
+
+#include "../../../ITMLib/Engine/ITMMainEngine.h"
+#include "../../../ITMLib/Utils/ITMLibSettings.h"
+#include "../../../Engine/ImageSourceEngine.h"
+#include "../../../Engine/OpenNIEngine.h"
+
+#include "../../../Utils/NVTimer.h"
+#include "../../../Utils/FileUtils.h"
+>>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
 
 // Standard Headers
 #include <cstdio>
 #include <cstdlib>
 
-using namespace RendAR;
+using namespace std;
 using namespace glm;
+using namespace RendAR;
+using namespace InfiniTAM::Engine;
 
 // scene objects
-Camera* camera;
+ARCamera* camera;
 Cube* cube;
 Cube* wireCube;
 Light* light;
@@ -36,6 +50,11 @@ key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void
 mouse_callback(GLFWwindow *window, double xpos, double ypos);
 
+ImageSourceEngine *imageSource;
+ITMMainEngine *mainEngine;
+ITMUChar4Image *inputRGBImage; ITMShortImage *inputRawDepthImage;
+void processFrame();
+
 /*
  * Main game loop.
  * Updates to objects go here.
@@ -46,18 +65,68 @@ void updateLoop()
   GLfloat currentFrame = glfwGetTime();
   deltaTime = currentFrame - lastFrame;
   lastFrame = currentFrame;
-  do_movement();
+  //do_movement();
+
+  processFrame();
+  
+  // set pose of opengl camera from infinitam
+  ITMPose *sensor_pose = mainEngine->GetTrackingState()->pose_d;
+  Matrix4f transform = sensor_pose->GetM();
+  mat4 camera_pose;
+  camera_pose = make_mat4(transform.getValues());
+  
+  camera->SetTransformationMatrix(camera_pose);
+
+  // fix pose of camera for opengl coordinate system
+  quat rot = camera->GetRotation();
+  rot.x = -rot.x;
+
+  vec3 pos = camera->GetPosition();
+  pos.y *= -1.0f;
+  pos.z *= -1.0f;
+
+  camera->SetPosition(pos);
+  camera->SetRotation(rot);
+
+  
+  /*
+  quat camRot = camera->GetRotation();
+  //vec3 euler(-pitch(camRot), yaw(camRot), roll(camRot));
+  // quat u_camRot(euler);
+  camera->SetRotation(u_camRot);
+  */
 
   light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
                           sin(glfwGetTime() / 2.0f) * 1.0f + 3,
                           0.0f));
 
   // rotate around axis
+<<<<<<< HEAD
   vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
   cube->SetRotation(quat(EulerAngles));
+=======
+  //vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
+  //cube->SetRotation(quat(EulerAngles));
+  //cube1->SetRotation(quat(EulerAngles));
+>>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
 }
 
 int main(int argc, char * argv[]) {
+
+  imageSource = new OpenNIEngine("", NULL);
+
+  if (imageSource->getDepthImageSize().x == 0) {
+    delete imageSource;
+    imageSource = NULL;
+    cout << "Error: OpenNI device not found\n";
+    return 0;
+  }
+
+  inputRGBImage = new ITMUChar4Image(imageSource->getRGBImageSize(), true, true);
+  inputRawDepthImage = new ITMShortImage(imageSource->getDepthImageSize(), true, true);
+
+  ITMLibSettings *internalSettings = new ITMLibSettings();
+  mainEngine = new ITMMainEngine(internalSettings, &imageSource->calib, imageSource->getRGBImageSize(), imageSource->getDepthImageSize());
 
   Engine::init(argc, argv);
 
@@ -69,7 +138,12 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
+<<<<<<< HEAD
   camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
+=======
+  camera = new ARCamera(vec3(0.0f, 0.0f, 3.0f));
+
+>>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
   scene->setCamera(camera);
 
   light = new Light();
@@ -104,9 +178,26 @@ int main(int argc, char * argv[]) {
   scene->add(light);
 
   Engine::startMainLoop(&updateLoop);
+
+  delete mainEngine;
+  delete internalSettings;
+  delete imageSource;
+  delete inputRGBImage;
+  delete inputRawDepthImage;
 }
 
 
+void processFrame()
+{
+  if (!imageSource->hasMoreImages()) return;
+  imageSource->getImages(inputRGBImage, inputRawDepthImage);
+  mainEngine->ProcessFrame(inputRGBImage, inputRawDepthImage);
+  ITMSafeCall(cudaThreadSynchronize());
+}
+
+
+
+/*
 void do_movement()
 {
   if (keys[GLFW_KEY_W])
@@ -118,6 +209,7 @@ void do_movement()
   if (keys[GLFW_KEY_D])
     camera->ProcessKeyboard(RIGHT, deltaTime);
 }
+*/
 
 
 void
@@ -132,7 +224,7 @@ mouse_callback(GLFWwindow *window, double xpos, double ypos)
   GLfloat yoffset = lastY - ypos;
   lastX = xpos;
   lastY = ypos;
-  camera->ProcessMouseMovement(xoffset, yoffset);
+  //camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
 

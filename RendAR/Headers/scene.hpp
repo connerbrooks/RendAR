@@ -1,6 +1,7 @@
 #pragma once
 #include "object.hpp"
 #include "camera.hpp"
+#include "ar_camera.hpp"
 #include "light.hpp"
 #include "context_config.hpp"
 #include "model.hpp"

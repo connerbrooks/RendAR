@@ -1,6 +1,8 @@
 RendAR
 ======
 
+![demo gif](https://raw.githubusercontent.com/connerbrooks/RendAR/gh-pages/rendar.gif)
+
 Getting Started
 ---------------
 Like [Glitter](http://polytonic.github.io/Glitter/) RendAR only depends on

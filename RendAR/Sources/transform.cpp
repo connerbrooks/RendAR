@@ -1,5 +1,7 @@
 #include "transform.hpp"
 
+#include "glm/gtx/matrix_decompose.hpp"
+
 namespace RendAR {
 
 Transform::Transform()
@@ -41,11 +43,12 @@ void Transform::Translate(const glm::vec3& translation) {
   position_ += translation;
 }
 
-/*
 void Transform::SetTransformationMatrix(const glm::mat4& transform_mat) {
-  util::DecomposeMatrix(transform_mat, position_, rotation_, scale_);
+  //util::DecomposeMatrix(transform_mat, position_, rotation_, scale_);
+  glm::vec3 skew;
+  glm::vec4 perspective;
+  glm::decompose(transform_mat, scale_, rotation_, position_, skew, perspective);
 }
-*/
 
 glm::mat4 Transform::GetTransformationMatrix() const {
   glm::mat4 trans_mat = glm::scale(glm::mat4_cast(rotation_), scale_);

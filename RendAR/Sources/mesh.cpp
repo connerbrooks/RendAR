@@ -16,7 +16,7 @@ namespace RendAR {
     vertices_ = vertices;
     indices_ = indices;
     textures_ = textures;
-    setShader(Shader("Shaders/model.vert", "Shaders/model.frag"));
+    //setShader(Shader("Shaders/model.vert", "Shaders/model.frag"));
     //setColor(glm::vec3(.3f, .3f, .3f));
   }
 
@@ -32,7 +32,8 @@ namespace RendAR {
     //if (normals_.empty() && hasNormals_ ) {
         glGenVertexArrays(1, &VAO_);
         glGenBuffers(1, &VBO_);
-        glGenBuffers(1, &EBO_);
+        if (!indices_.empty());
+          glGenBuffers(1, &EBO_);
 
         glBindVertexArray(VAO_);
         glBindBuffer(GL_ARRAY_BUFFER, VBO_);
@@ -50,7 +51,8 @@ namespace RendAR {
 
             glEnableVertexAttribArray(vertex_attrib_);
             glVertexAttribPointer(vertex_attrib_, 3, GL_FLOAT, GL_FALSE,
-                                sizeof(Vertex), (GLvoid*)0);
+                                sizeof(Vertex), 
+                                (GLvoid*)0);
 
             glEnableVertexAttribArray(normal_attrib_);
             glVertexAttribPointer(normal_attrib_, 3, GL_FLOAT, GL_FALSE,
@@ -58,10 +60,11 @@ namespace RendAR {
                                   (GLvoid*)(offsetof(Vertex, Normal)));
 
             glEnableVertexAttribArray(2);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 
+                                  sizeof(Vertex),
                                   (GLvoid*)(offsetof(Vertex, TexCoords)));
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindVertexArray(0);
         isInitialized_ = true;
@@ -98,6 +101,7 @@ namespace RendAR {
   {
     glDeleteVertexArrays(1, &VAO_);
     glDeleteBuffers(1, &VBO_);
+    glDeleteBuffers(1, &EBO_);
   }
 
   void
@@ -156,7 +160,7 @@ namespace RendAR {
 
     }
     if (textures_.empty())
-        glActiveTexture(GL_TEXTURE0);
+      glActiveTexture(GL_TEXTURE0);
 
     if (wireframe_)
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -164,13 +168,13 @@ namespace RendAR {
     glBindVertexArray(VAO_);
 
     if (indices_.empty())
-        glDrawArrays(render_mode_, 0, vertices_.size());
+      glDrawArrays(render_mode_, 0, vertices_.size());
     else
-        glDrawElements(render_mode_, indices_.size(), GL_UNSIGNED_INT, 0);
+      glDrawElements(render_mode_, indices_.size(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 
     if (wireframe_)
-          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   }
 }

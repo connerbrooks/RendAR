@@ -41,14 +41,14 @@ namespace RendAR
 
   protected:
     std::vector<GLuint> indices_;
-    //std::vector<GLfloat> vertices_;
     std::vector<Vertex> vertices_;
     std::vector<GLfloat> normals_;
 
+    std::vector<Texture> textures_loaded_;
     std::vector<Texture> textures_;
 
     Shader shader_;
-    glm::vec3 color_;
+    glm::vec3 color_ = glm::vec3(1.0f);
 
     GLuint VBO_, VAO_, EBO_;
     GLenum render_mode_;

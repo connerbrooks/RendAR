@@ -2,99 +2,7 @@
 
 namespace RendAR {
 
-  Cube::Cube()
-  {
-    /*
-  static const GLfloat vertices[] = {
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f,  0.5f, -0.5f,
-    0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-
-    -0.5f, -0.5f,  0.5f,
-    0.5f, -0.5f,  0.5f,
-    0.5f,  0.5f,  0.5f,
-    0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-    -0.5f, -0.5f,  0.5f,
-
-    -0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-
-    0.5f,  0.5f,  0.5f,
-    0.5f,  0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f,  0.5f,
-    0.5f,  0.5f,  0.5f,
-
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f,  0.5f,
-    0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f, -0.5f,
-
-    -0.5f,  0.5f, -0.5f,
-    0.5f,  0.5f, -0.5f,
-    0.5f,  0.5f,  0.5f,
-    0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f, -0.5f,
-  };
-
-    static const GLfloat normals[] = {
-    0.0f,  0.0f, -1.0f,
-    0.0f,  0.0f, -1.0f,
-    0.0f,  0.0f, -1.0f,
-    0.0f,  0.0f, -1.0f,
-    0.0f,  0.0f, -1.0f,
-    0.0f,  0.0f, -1.0f,
-
-    0.0f,  0.0f, 1.0f,
-    0.0f,  0.0f, 1.0f,
-    0.0f,  0.0f, 1.0f,
-    0.0f,  0.0f, 1.0f,
-    0.0f,  0.0f, 1.0f,
-    0.0f,  0.0f, 1.0f,
-
-    -1.0f,  0.0f,  0.0f,
-    -1.0f,  0.0f,  0.0f,
-    -1.0f,  0.0f,  0.0f,
-    -1.0f,  0.0f,  0.0f,
-    -1.0f,  0.0f,  0.0f,
-    -1.0f,  0.0f,  0.0f,
-
-    1.0f,  0.0f,  0.0f,
-    1.0f,  0.0f,  0.0f,
-    1.0f,  0.0f,  0.0f,
-    1.0f,  0.0f,  0.0f,
-    1.0f,  0.0f,  0.0f,
-    1.0f,  0.0f,  0.0f,
-
-    0.0f, -1.0f,  0.0f,
-    0.0f, -1.0f,  0.0f,
-    0.0f, -1.0f,  0.0f,
-    0.0f, -1.0f,  0.0f,
-    0.0f, -1.0f,  0.0f,
-    0.0f, -1.0f,  0.0f,
-
-    0.0f,  1.0f,  0.0f,
-    0.0f,  1.0f,  0.0f,
-    0.0f,  1.0f,  0.0f,
-    0.0f,  1.0f,  0.0f,
-    0.0f,  1.0f,  0.0f,
-    0.0f,  1.0f,  0.0f
-    };
-    */
-
-    GLfloat vertices[] = {
+  GLfloat vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
      0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
      0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -136,32 +44,31 @@ namespace RendAR {
      0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-    };
-
-    /*
-      std::vector<GLfloat> verts (
-            vertices,
-            vertices + sizeof(vertices) / sizeof(GLfloat));
-    */
+  };
 
 
-      for (GLuint i = 0; i < sizeof(vertices) / sizeof(GLfloat) - 6; i+=6) {
-        Vertex vert;
-        glm::vec3 v;
-        v.x = vertices[i];
-        v.y = vertices[i] + 1;
-        v.z = vertices[i] + 2;
-        vert.Position = v;
 
-        v.x = vertices[i] + 3;
-        v.y = vertices[i] + 4;
-        v.z = vertices[i] + 5;
-        vert.Normal = v;
+  Cube::Cube()
+  {
+    int num = sizeof(vertices) / sizeof(GLfloat);
 
-        glm::vec2 t(0.0f, 0.0f);
-        vert.TexCoords = t;
-        vertices_.push_back(vert);
-      }
+    for (GLuint i = 0; i < num; i+=6) {
+      Vertex vert;
+      glm::vec3 v;
+      v.x = vertices[i];
+      v.y = vertices[i + 1];
+      v.z = vertices[i + 2];
+      vert.Position = v;
+
+      v.x = vertices[i + 3];
+      v.y = vertices[i + 4];
+      v.z = vertices[i + 5];
+      vert.Normal = v;
+
+      glm::vec2 t(0.0f, 0.0f);
+      vert.TexCoords = t;
+      vertices_.push_back(vert);
+    }
 
 
       //setVertices(verts);
@@ -172,7 +79,6 @@ namespace RendAR {
       setShader( Shader("Shaders/phong.vert", "Shaders/phong.frag") );
 
       SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-      setColor(glm::vec3(0.1f, 0.5f, 0.9f));
     }
 }
 

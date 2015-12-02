@@ -51,12 +51,14 @@ namespace RendAR {
       vec.z = mesh->mVertices[i].z;
       vertex.Position = vec;
 
-      vec.x = mesh->mNormals[i].x;
-      vec.y = mesh->mNormals[i].y;
-      vec.z = mesh->mNormals[i].z;
-      vertex.Normal = vec;
+      if (mesh->HasNormals()) {
+        vec.x = mesh->mNormals[i].x;
+        vec.y = mesh->mNormals[i].y;
+        vec.z = mesh->mNormals[i].z;
+        vertex.Normal = vec;
+      }
 
-      if (mesh->mTextureCoords[0]) {
+      if (mesh->HasTextureCoords(0)) {
         glm::vec2 vec;
         vec.x = mesh->mTextureCoords[0][i].x;
         vec.y = mesh->mTextureCoords[0][i].y;
@@ -96,7 +98,7 @@ namespace RendAR {
     }
 
     Mesh* m = new Mesh(vertices, indices, textures);
-    //m->setWireframe(true);
+    m->setShader(Shader("Shaders/model.vert", "Shaders/model.frag")); // TODO use one shader
     return m;
   }
 
@@ -109,11 +111,21 @@ namespace RendAR {
     for (GLuint i = 0; i < mat->GetTextureCount(type); i++) {
       aiString str;
       mat->GetTexture(type, i, &str);
-      Texture texture;
-      texture.id = TextureFromFile(str.C_Str(), directory_);
-      texture.type = typeName;
-      texture.path = str;
-      textures.push_back(texture);
+      GLboolean skip = false;
+      for (GLuint j = 0; j < textures_loaded_.size(); j++) {
+        if (textures_loaded_[j].path == str) {
+          textures.push_back(textures_loaded_[j]);
+          skip = true;
+          break;
+        }
+      }
+      if (!skip) {
+        Texture texture;
+        texture.id = TextureFromFile(str.C_Str(), directory_);
+        texture.type = typeName;
+        texture.path = str;
+        textures.push_back(texture);
+      }
     }
     return textures;
   }

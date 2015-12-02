@@ -16,7 +16,7 @@ using namespace glm;
 // scene objects
 Camera* camera;
 Cube* cube;
-Cube* cube1;
+Cube* wireCube;
 Light* light;
 Model* model;
 
@@ -48,14 +48,13 @@ void updateLoop()
   lastFrame = currentFrame;
   do_movement();
 
-  //light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
-  //                        sin(glfwGetTime() / 2.0f) * 1.0f,
-  //                        0.0f));
+  light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
+                          sin(glfwGetTime() / 2.0f) * 1.0f + 3,
+                          0.0f));
 
   // rotate around axis
   vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
-  //cube->SetRotation(quat(EulerAngles));
-  model->SetRotation(quat(EulerAngles));
+  cube->SetRotation(quat(EulerAngles));
 }
 
 int main(int argc, char * argv[]) {
@@ -74,32 +73,32 @@ int main(int argc, char * argv[]) {
   scene->setCamera(camera);
 
   light = new Light();
-  light->SetPosition(vec3(0.0f, 3.0f, 0.0f));
+  light->SetPosition(vec3(0.0f, 3.0f, -2.0f));
 
   cube = new Cube();
-  cube->SetPosition(vec3(0.0f, 0.0f, 2.0f));
+  cube->SetPosition(vec3(-1.0f, 1.5f, 2.0f));
+  cube->setColor(vec3(0.2f, 0.2f, 0.6f));
 
-  /*
 
   Cube *floor = new Cube();
+  floor->setColor(vec3(0.3f, 0.3f, 0.35f));
   floor->SetScale(vec3(20.0f, .2f, 20.0f));
-  floor->SetPosition(vec3(0, -4, 0));
+  floor->SetPosition(vec3(0, -0.2f, 0));
 
-  cube1 = new Cube();
-  cube1->setShader(Shader("Shaders/default.vert", "Shaders/default.frag"));
-  cube1->SetPosition(vec3(-1.0f, -0.4f, -3.0f));
-  cube1->setColor(vec3(0.9f, 0.1f, .45f));
-  cube1->setWireframe(true);
-  cube1->SetParent(cube);
+  wireCube = new Cube();
+  wireCube->setShader(Shader("Shaders/default.vert", "Shaders/default.frag"));
+  wireCube->SetPosition(vec3(-1.0f, 0.4f, -3.0f));
+  wireCube->setColor(vec3(0.9f, 0.1f, .45f));
+  wireCube->setWireframe(true);
+  wireCube->SetParent(cube);
+
+  // create model from obj file
+  model = new Model("nanosuit/nanosuit.obj");
+  model->SetScale(vec3(0.25f, 0.25f, 0.25f));
+  model->SetPosition(vec3(0, 0, -1.5f));
 
   // add objects to scene
   scene->add(floor);
-  scene->add(cube);
-  scene->add(cube1);
-  scene->add(light);
-  */
-
-  model = new Model("nanosuit/nanosuit.obj");
   scene->add(model);
   scene->add(cube);
   scene->add(light);

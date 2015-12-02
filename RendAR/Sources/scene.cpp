@@ -7,6 +7,15 @@ namespace RendAR
     : name_(name)
   {}
 
+  Scene::~Scene()
+  {
+    for (auto o : objects_)
+      delete o;
+    for (auto l : lights_)
+      delete l;
+    delete camera_;
+  }
+
   void
   Scene::add(Object* o)
   {

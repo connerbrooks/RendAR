@@ -13,6 +13,17 @@ namespace RendAR
     createScene("default");
   }
 
+  Engine::~Engine()
+  {
+    delete context_;
+    delete scene_;
+  }
+
+  void Engine::cleanUp()
+  {
+    delete instance;
+  }
+
   void Engine::startMainLoop(void (*updateLoop)())
   {
     instance->context_->mainLoop(updateLoop);

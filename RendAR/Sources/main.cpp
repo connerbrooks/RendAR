@@ -4,9 +4,7 @@
 #include "camera.hpp"
 #include "cube.hpp"
 #include "light.hpp"
-<<<<<<< HEAD
 #include "model.hpp"
-=======
 #include "ar_camera.hpp"
 
 #include "../../../ITMLib/Engine/ITMMainEngine.h"
@@ -16,7 +14,6 @@
 
 #include "../../../Utils/NVTimer.h"
 #include "../../../Utils/FileUtils.h"
->>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
 
 // Standard Headers
 #include <cstdio>
@@ -88,27 +85,14 @@ void updateLoop()
   camera->SetPosition(pos);
   camera->SetRotation(rot);
 
-  
-  /*
-  quat camRot = camera->GetRotation();
-  //vec3 euler(-pitch(camRot), yaw(camRot), roll(camRot));
-  // quat u_camRot(euler);
-  camera->SetRotation(u_camRot);
-  */
 
   light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
                           sin(glfwGetTime() / 2.0f) * 1.0f + 3,
                           0.0f));
 
   // rotate around axis
-<<<<<<< HEAD
   vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
   cube->SetRotation(quat(EulerAngles));
-=======
-  //vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
-  //cube->SetRotation(quat(EulerAngles));
-  //cube1->SetRotation(quat(EulerAngles));
->>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
 }
 
 int main(int argc, char * argv[]) {
@@ -138,12 +122,8 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
-<<<<<<< HEAD
-  camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
-=======
   camera = new ARCamera(vec3(0.0f, 0.0f, 3.0f));
 
->>>>>>> 5df4ef7... Add necessary dependencies for using as an InfiniTAM sub project. OpenGL camera pose set by infinitam.
   scene->setCamera(camera);
 
   light = new Light();
@@ -153,6 +133,9 @@ int main(int argc, char * argv[]) {
   cube->SetPosition(vec3(-1.0f, 1.5f, 2.0f));
   cube->setColor(vec3(0.2f, 0.2f, 0.6f));
 
+
+  cube = new Cube();
+  cube->SetPosition(vec3(-1.5f, 0.0f, -2.0f));
 
   Cube *floor = new Cube();
   floor->setColor(vec3(0.3f, 0.3f, 0.35f));
@@ -179,6 +162,7 @@ int main(int argc, char * argv[]) {
 
   Engine::startMainLoop(&updateLoop);
 
+  Engine::cleanUp();
   delete mainEngine;
   delete internalSettings;
   delete imageSource;

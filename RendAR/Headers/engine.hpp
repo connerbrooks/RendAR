@@ -9,13 +9,15 @@ namespace RendAR
 {
   class Engine {
   public:
+    ~Engine();
     static void init(int& argc, char **argv, const ContextConfig& config = ContextConfig::plain);
-    static Scene* createScene(const std::string &name);
+    static void cleanUp();
     static Context* context();
+    static Scene* createScene(const std::string &name);
+    static Scene* activeScene();
     static void startMainLoop(void (*updateLoop)());
     static void update();
     static void render();
-    static Scene* activeScene();
 
   private:
     static Engine* instance;

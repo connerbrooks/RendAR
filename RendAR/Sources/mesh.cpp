@@ -41,9 +41,12 @@ namespace RendAR {
                     vertices_.size() * sizeof(Vertex),
                     &vertices_[0], GL_STATIC_DRAW);
 
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size() * sizeof(GLuint),
-                         &indices_[0], GL_STATIC_DRAW);
+            if (!indices_.empty()) {
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                             indices_.size() * sizeof(GLuint),
+                             &indices_[0], GL_STATIC_DRAW);
+            }
 
             glEnableVertexAttribArray(vertex_attrib_);
             glVertexAttribPointer(vertex_attrib_, 3, GL_FLOAT, GL_FALSE,
@@ -152,14 +155,19 @@ namespace RendAR {
       glBindTexture(GL_TEXTURE_2D, textures_[i].id);
 
     }
-    glActiveTexture(GL_TEXTURE0);
+    if (textures_.empty())
+        glActiveTexture(GL_TEXTURE0);
 
     if (wireframe_)
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glBindVertexArray(VAO_);
-    //glDrawArrays(render_mode_, 0, vertices_.size() / 6);
-    glDrawElements(render_mode_, indices_.size(), GL_UNSIGNED_INT, 0);
+
+    if (indices_.empty())
+        glDrawArrays(render_mode_, 0, vertices_.size());
+    else
+        glDrawElements(render_mode_, indices_.size(), GL_UNSIGNED_INT, 0);
+
     glBindVertexArray(0);
 
     if (wireframe_)

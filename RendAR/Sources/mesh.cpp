@@ -122,7 +122,7 @@ namespace RendAR {
 
       glm::vec3 lightColor = lights[0]->getColor();
       glm::vec3 lightPosition = lights[0]->GetPosition();
-      ARCamera *cam = Engine::activeScene()->getCamera();
+      Camera *cam = Engine::activeScene()->getCamera();
 
       // lighting uniforms
       glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);

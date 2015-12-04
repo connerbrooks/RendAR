@@ -9,5 +9,6 @@ namespace RendAR {
     ARCamera();
     ARCamera(glm::vec3& pos);
     glm::mat4 GetViewMatrix() override;
+    void setInfiniTAMPose(glm::mat4 transform);
   };
 }

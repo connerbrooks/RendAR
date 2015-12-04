@@ -25,7 +25,7 @@ using namespace RendAR;
 using namespace InfiniTAM::Engine;
 
 // scene objects
-ARCamera* camera;
+Camera* camera;
 Cube* cube;
 Cube* wireCube;
 Light* light;
@@ -66,30 +66,15 @@ void updateLoop()
 
   processFrame();
   
-  // set pose of opengl camera from infinitam
-  ITMPose *sensor_pose = mainEngine->GetTrackingState()->pose_d;
-  Matrix4f transform = sensor_pose->GetM();
-  mat4 camera_pose;
-  camera_pose = make_mat4(transform.getValues());
-  
-  camera->SetTransformationMatrix(camera_pose);
+  // set camera position from InfiniTAM
+  Matrix4f sensor_pose = mainEngine->GetTrackingState()->pose_d->GetM();
+  mat4 camera_pose = make_mat4(sensor_pose.getValues());
+  dynamic_cast<ARCamera*>(camera)->setInfiniTAMPose(camera_pose);
 
-  // fix pose of camera for opengl coordinate system
-  quat rot = camera->GetRotation();
-  rot.x = -rot.x;
-
-  vec3 pos = camera->GetPosition();
-  pos.y *= -1.0f;
-  pos.z *= -1.0f;
-
-  camera->SetPosition(pos);
-  camera->SetRotation(rot);
-
-
+  // move objects
   light->SetPosition(vec3(1.0f + sin(glfwGetTime()) * 2.0f,
                           sin(glfwGetTime() / 2.0f) * 1.0f + 3,
                           0.0f));
-
   // rotate around axis
   vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
   cube->SetRotation(quat(EulerAngles));
@@ -122,7 +107,7 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
-  camera = new ARCamera(vec3(0.0f, 0.0f, 3.0f));
+  camera = new ARCamera(vec3(0.0f, 3.0f, 3.0f));
 
   scene->setCamera(camera);
 
@@ -140,7 +125,7 @@ int main(int argc, char * argv[]) {
   Cube *floor = new Cube();
   floor->setColor(vec3(0.3f, 0.3f, 0.35f));
   floor->SetScale(vec3(20.0f, .2f, 20.0f));
-  floor->SetPosition(vec3(0, -0.2f, 0));
+  floor->SetPosition(vec3(0, -3.0f, 0));
 
   wireCube = new Cube();
   wireCube->setShader(Shader("Shaders/default.vert", "Shaders/default.frag"));
@@ -152,7 +137,7 @@ int main(int argc, char * argv[]) {
   // create model from obj file
   model = new Model("nanosuit/nanosuit.obj");
   model->SetScale(vec3(0.25f, 0.25f, 0.25f));
-  model->SetPosition(vec3(0, 0, -1.5f));
+  model->SetPosition(vec3(0, -3.0f, -1.5f));
 
   // add objects to scene
   scene->add(floor);

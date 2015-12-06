@@ -7,7 +7,7 @@ namespace RendAR {
   void Model::render(glm::mat4& view, glm::mat4& proj)
   {
     for (auto m : meshes_) {
-      m->SetTransformationMatrix(GetTransformationMatrix());
+      m->setTransformationMatrix(getTransformationMatrix());
       m->render(view, proj);
     }
   }

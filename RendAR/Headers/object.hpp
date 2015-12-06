@@ -30,8 +30,6 @@ namespace RendAR
     void setVertices(const std::vector<Vertex>& vertices);
     void setVertices(const std::vector<Vertex>& vertices,
                      const std::vector<GLuint>& indices);
-    void setVertices(const std::vector<Vertex>& vertices,
-                     const std::vector<GLfloat>& normals);
     void setShader(const Shader& shader);
     void setColor(const glm::vec3& color);
     glm::vec3 getColor();
@@ -42,7 +40,6 @@ namespace RendAR
   protected:
     std::vector<GLuint> indices_;
     std::vector<Vertex> vertices_;
-    std::vector<GLfloat> normals_;
 
     std::vector<Texture> textures_loaded_;
     std::vector<Texture> textures_;
@@ -52,6 +49,7 @@ namespace RendAR
 
     GLuint VBO_, VAO_, EBO_;
     GLenum render_mode_;
+    GLenum buffer_mode_;
     GLint uniform_model_;
     GLint uniform_view_;
     GLint uniform_projection_;
@@ -62,6 +60,5 @@ namespace RendAR
 
     bool wireframe_ = false;
     bool isInitialized_ = false;
-    bool hasNormals_ = false;
   };
 }

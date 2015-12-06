@@ -13,24 +13,24 @@ class Transform {
   Transform(const Transform& other) = delete;
   const Transform& operator=(const Transform& rhs) = delete;
 
-  void SetPosition(const glm::vec3& position);
-  glm::vec3 GetPosition() const;
+  void setPosition(const glm::vec3& position);
+  glm::vec3 getPosition() const;
 
-  void SetRotation(const glm::quat& rotation);
-  glm::quat GetRotation() const;
+  void setRotation(const glm::quat& rotation);
+  glm::quat getRotation() const;
 
-  void SetScale(const glm::vec3& scale);
-  glm::vec3 GetScale() const;
+  void setScale(const glm::vec3& scale);
+  glm::vec3 getScale() const;
 
-  void Translate(const glm::vec3& translation);
+  void translate(const glm::vec3& translation);
 
-  void SetTransformationMatrix(const glm::mat4& transform_mat);
-  glm::mat4 GetTransformationMatrix() const;
+  void setTransformationMatrix(const glm::mat4& transform_mat);
+  glm::mat4 getTransformationMatrix() const;
 
-  void SetParent(Transform* transform);
+  void setParent(Transform* transform);
 
-  const Transform* GetParent() const ;
-  Transform* GetParent() ;
+  const Transform* getParent() const ;
+  Transform* getParent() ;
 
  private:
   Transform* parent_;

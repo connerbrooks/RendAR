@@ -7,19 +7,18 @@ namespace RendAR {
   Mesh::Mesh()
   {
     render_mode_ = GL_TRIANGLES;
+    buffer_mode_ = GL_STATIC_DRAW;
   }
 
 
   Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures)
   {
     render_mode_ = GL_TRIANGLES;
+    buffer_mode_ = GL_STATIC_DRAW;
     vertices_ = vertices;
     indices_ = indices;
     textures_ = textures;
-    //setShader(Shader("Shaders/model.vert", "Shaders/model.frag"));
-    //setColor(glm::vec3(.3f, .3f, .3f));
   }
-
 
   void
   Mesh::initBuffers()
@@ -27,74 +26,43 @@ namespace RendAR {
     if (vertices_.empty())
       return;
 
-    // assumes both verteces and normals are in vertices_ vector
-    // TODO: allow for separate normal buffer and vertex buffer
-    //if (normals_.empty() && hasNormals_ ) {
-        glGenVertexArrays(1, &VAO_);
-        glGenBuffers(1, &VBO_);
-        if (!indices_.empty());
-          glGenBuffers(1, &EBO_);
+    glGenVertexArrays(1, &VAO_);
+    glGenBuffers(1, &VBO_);
 
-        glBindVertexArray(VAO_);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO_);
+    if (!indices_.empty());
+      glGenBuffers(1, &EBO_);
 
-            glBufferData(GL_ARRAY_BUFFER,
-                    vertices_.size() * sizeof(Vertex),
-                    &vertices_[0], GL_STATIC_DRAW);
+    glBindVertexArray(VAO_);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_);
 
-            if (!indices_.empty()) {
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                             indices_.size() * sizeof(GLuint),
-                             &indices_[0], GL_STATIC_DRAW);
-            }
+    glBufferData(GL_ARRAY_BUFFER,
+                 vertices_.size() * sizeof(Vertex),
+                 &vertices_[0], buffer_mode_);
 
-            glEnableVertexAttribArray(vertex_attrib_);
-            glVertexAttribPointer(vertex_attrib_, 3, GL_FLOAT, GL_FALSE,
-                                sizeof(Vertex), 
-                                (GLvoid*)0);
-
-            glEnableVertexAttribArray(normal_attrib_);
-            glVertexAttribPointer(normal_attrib_, 3, GL_FLOAT, GL_FALSE,
-                                  sizeof(Vertex),
-                                  (GLvoid*)(offsetof(Vertex, Normal)));
-
-            glEnableVertexAttribArray(2);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 
-                                  sizeof(Vertex),
-                                  (GLvoid*)(offsetof(Vertex, TexCoords)));
-
-        //glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glBindVertexArray(0);
-        isInitialized_ = true;
-        /*
+    if (!indices_.empty()) {
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                   indices_.size() * sizeof(GLuint),
+                   &indices_[0], buffer_mode_);
     }
-    else if (hasNormals_)
-    {
-    }
-    else {
-      glGenVertexArrays(1, &VAO_);
-      glGenBuffers(1, &VBO_);
 
-      glBindVertexArray(VAO_);
+    glEnableVertexAttribArray(vertex_attrib_);
+    glVertexAttribPointer(vertex_attrib_, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(Vertex), 
+                          (GLvoid*)0);
 
-      glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-      glBufferData(GL_ARRAY_BUFFER,
-                   vertices_.size() * sizeof(GLfloat),
-                   &vertices_[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(normal_attrib_);
+    glVertexAttribPointer(normal_attrib_, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(Vertex),
+                          (GLvoid*)(offsetof(Vertex, Normal)));
 
-      glVertexAttribPointer(vertex_attrib_, 3, GL_FLOAT, GL_FALSE,
-                            3 * sizeof(GLfloat), (GLvoid*)0);
-      glEnableVertexAttribArray(vertex_attrib_);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 
+                          sizeof(Vertex),
+                          (GLvoid*)(offsetof(Vertex, TexCoords)));
 
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-      glBindVertexArray(0);
-      isInitialized_ = true;
-    }
-        */
-
+    glBindVertexArray(0);
+    isInitialized_ = true;
   }
 
   Mesh::~Mesh()
@@ -121,7 +89,7 @@ namespace RendAR {
         GLint viewPosLoc     = glGetUniformLocation(shader_.Program, "viewPos");
 
         glm::vec3 lightColor = lights[0]->getColor();
-        glm::vec3 lightPosition = lights[0]->GetPosition();
+        glm::vec3 lightPosition = lights[0]->getPosition();
         Camera *cam = Engine::activeScene()->getCamera();
 
         // lighting uniforms
@@ -139,11 +107,12 @@ namespace RendAR {
     uniform_view_ = glGetUniformLocation(shader_.Program, "view");
     uniform_projection_ = glGetUniformLocation(shader_.Program, "projection");
 
-    glm::mat4 model = GetTransformationMatrix(); // get model transform
+    glm::mat4 model = getTransformationMatrix(); // get model transform
     glUniformMatrix4fv(uniform_view_, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(uniform_projection_, 1, GL_FALSE, glm::value_ptr(proj));
     glUniformMatrix4fv(uniform_model_, 1, GL_FALSE, glm::value_ptr(model));
 
+    // apply textures if they are there
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     for (GLuint i = 0; i < textures_.size(); i++) {

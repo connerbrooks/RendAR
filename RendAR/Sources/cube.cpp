@@ -74,11 +74,10 @@ namespace RendAR {
       //setVertices(verts);
       // let render know that there are normals
       // TODO: more elegant soln
-      hasNormals_ = true;
 
       setShader( Shader("Shaders/phong.vert", "Shaders/phong.frag") );
 
-      SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+      setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
     }
 }
 

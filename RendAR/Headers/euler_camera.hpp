@@ -43,7 +43,6 @@ namespace RendAR {
       this->updateCameraVectors();
     }
 
-    // Return view matrix 
     glm::mat4 getViewMatrix() override;
     void move(CameraDirection direction, GLfloat deltaTime) override;
     void processMouse(glm::vec2& offset) override;

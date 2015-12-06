@@ -13,8 +13,8 @@ namespace RendAR {
     Camera() {};
     ~Camera() {};
     virtual glm::mat4 getViewMatrix() = 0;
-    virtual void move(CameraDirection dir, GLfloat deltaTime) = 0;
-    virtual void processMouse(glm::vec2& offset) = 0;
+    virtual void move(CameraDirection dir, GLfloat deltaTime) {};
+    virtual void processMouse(glm::vec2& offset) {};
 
   protected:
     double aspect_;

@@ -55,7 +55,7 @@ namespace RendAR
     glm::mat4 view, proj;
 
     if (camera_) {
-      view = camera_->GetViewMatrix();
+      view = camera_->getViewMatrix();
     }
 
     ContextConfig config = Engine::context()->getContextConfig();

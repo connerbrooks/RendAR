@@ -50,9 +50,7 @@ namespace RendAR {
 
   Cube::Cube()
   {
-    int num = sizeof(vertices) / sizeof(GLfloat);
-
-    for (GLuint i = 0; i < num; i+=6) {
+    for (GLuint i = 0; i < sizeof(vertices) / sizeof(GLfloat); i += 6) {
       Vertex vert;
       glm::vec3 v;
       v.x = vertices[i];
@@ -70,15 +68,9 @@ namespace RendAR {
       vertices_.push_back(vert);
     }
 
-
-      //setVertices(verts);
-      // let render know that there are normals
-      // TODO: more elegant soln
-
-      setShader( Shader("Shaders/phong.vert", "Shaders/phong.frag") );
-
-      setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-    }
+    setShader(Shader("Shaders/phong.vert", "Shaders/phong.frag"));
+    setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+  }
 }
 
 

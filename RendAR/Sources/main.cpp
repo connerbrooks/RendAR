@@ -53,7 +53,7 @@ void updateLoop()
                           0.0f));
 
   // rotate around axis
-  vec3 EulerAngles(-(GLfloat)glfwGetTime(), 45, 0);
+  vec3 EulerAngles(0, -(GLfloat)glfwGetTime(), 0);
   cube->setRotation(quat(EulerAngles));
 }
 
@@ -69,15 +69,15 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
-  camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
+  camera = new Camera(vec3(0.0f, 3.0f, 1.5f));
   scene->setCamera(camera);
 
   light = new Light();
-  light->setPosition(vec3(0.0f, 3.0f, -2.0f));
+  light->setPosition(vec3(0.0f, 3.0f, 0));
 
   cube = new Cube();
-  cube->setPosition(vec3(-1.0f, 1.5f, 2.0f));
-  cube->setColor(vec3(0.2f, 0.2f, 0.6f));
+  cube->setPosition(vec3(0.0f, 2.5f, -2.5f));
+  cube->setColor(vec3(0.0f, 0.737f, 0.831f));
 
 
   Cube *floor = new Cube();
@@ -101,6 +101,7 @@ int main(int argc, char * argv[]) {
   scene->add(floor);
   scene->add(model);
   scene->add(cube);
+  scene->add(wireCube);
   scene->add(light);
 
   Engine::startMainLoop(&updateLoop);

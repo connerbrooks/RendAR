@@ -1,12 +1,12 @@
-#include "euler_camera.hpp"
+#include "first_person_camera.hpp"
 
 namespace RendAR {
-  glm::mat4 EulerCamera::getViewMatrix()
+  glm::mat4 FirstPersonCamera::getViewMatrix()
   {
     return glm::lookAt(this->getPosition(), this->getPosition() + this->front_, this->up_);
   }
 
-  void EulerCamera::move(CameraDirection direction, GLfloat deltaTime)
+  void FirstPersonCamera::move(CameraDirection direction, GLfloat deltaTime)
   {
     GLfloat velocity = this->move_speed_ * deltaTime;
     switch (direction) {
@@ -25,7 +25,7 @@ namespace RendAR {
     }
   }
 
-  void EulerCamera::processMouse(glm::vec2& offset)
+  void FirstPersonCamera::processMouse(glm::vec2& offset)
   {
     offset *= mouse_sensitivity_;
 
@@ -42,7 +42,7 @@ namespace RendAR {
     updateCameraVectors();
   }
 
-  void EulerCamera::updateCameraVectors()
+  void FirstPersonCamera::updateCameraVectors()
   {
     glm::vec3 front;
     front.x = cos(this->yaw_) * cos(this->pitch_);

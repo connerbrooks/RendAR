@@ -17,7 +17,8 @@ namespace RendAR {
   const GLfloat SENSITIVITY = 0.025f;
   const GLfloat ZOOM = 0.25f;
 
-  class EulerCamera : public Camera
+  // First person
+  class FirstPersonCamera : public Camera
   {
   public:
     // eular angles
@@ -32,7 +33,7 @@ namespace RendAR {
     bool constrain_pitch_ = true;
 
     // Vector Constructor
-    EulerCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH)
+    FirstPersonCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH)
       :  move_speed_(SPEED), mouse_sensitivity_(SENSITIVITY), zoom_(ZOOM)
     {
       front_ = glm::vec3(0.0f, 0.0f, -1.0f);

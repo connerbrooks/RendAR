@@ -5,6 +5,7 @@
 #include "cube.hpp"
 #include "light.hpp"
 #include "model.hpp"
+#include "first_person_camera.hpp"
 
 // Standard Headers
 #include <cstdio>
@@ -69,7 +70,7 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
-  camera = new Camera(vec3(0.0f, 3.0f, 1.5f));
+  camera = new FirstPersonCamera(vec3(0.0f, 3.0f, 1.5f));
   scene->setCamera(camera);
 
   light = new Light();
@@ -111,13 +112,13 @@ int main(int argc, char * argv[]) {
 void do_movement()
 {
   if (keys[GLFW_KEY_W])
-    camera->ProcessKeyboard(FORWARD, deltaTime);
+    camera->move(FORWARD, deltaTime);
   if (keys[GLFW_KEY_S])
-    camera->ProcessKeyboard(BACKWARD, deltaTime);
+    camera->move(BACK, deltaTime);
   if (keys[GLFW_KEY_A])
-    camera->ProcessKeyboard(LEFT, deltaTime);
+    camera->move(LEFT, deltaTime);
   if (keys[GLFW_KEY_D])
-    camera->ProcessKeyboard(RIGHT, deltaTime);
+    camera->move(RIGHT, deltaTime);
 }
 
 
@@ -129,11 +130,10 @@ mouse_callback(GLFWwindow *window, double xpos, double ypos)
     lastY = ypos;
     firstMouse = false;
   }
-  GLfloat xoffset = xpos - lastX;
-  GLfloat yoffset = lastY - ypos;
+  vec2 offset(xpos - lastX, lastY - ypos);
   lastX = xpos;
   lastY = ypos;
-  camera->ProcessMouseMovement(xoffset, yoffset);
+  camera->processMouse(offset);
 }
 
 

@@ -95,7 +95,7 @@ namespace RendAR {
         // lighting uniforms
         glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);
         glUniform3f(lightPosLoc, lightPosition.x, lightPosition.y, lightPosition.y);
-        glUniform3f(viewPosLoc, cam->Position.x, cam->Position.y, cam->Position.z);
+        glUniform3f(viewPosLoc, cam->getPosition().x, cam->getPosition().y, cam->getPosition().z);
     }
 
     // set color uniform

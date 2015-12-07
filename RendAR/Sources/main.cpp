@@ -5,7 +5,7 @@
 #include "cube.hpp"
 #include "light.hpp"
 #include "model.hpp"
-#include "euler_camera.hpp"
+#include "first_person_camera.hpp"
 
 // Standard Headers
 #include <cstdio>
@@ -70,7 +70,7 @@ int main(int argc, char * argv[]) {
   glfw_context->setClearColor(vec3(0.0f, 0.0f, 0.0f));
 
   Scene* scene = Engine::activeScene();
-  camera = new EulerCamera(vec3(0.0f, 3.0f, 1.5f));
+  camera = new FirstPersonCamera(vec3(0.0f, 3.0f, 1.5f));
   scene->setCamera(camera);
 
   light = new Light();

@@ -55,11 +55,22 @@ source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
                 -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
+add_library(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
                                ${VENDORS_SOURCES})
 target_link_libraries(${PROJECT_NAME} assimp glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
                       BulletDynamics BulletCollision LinearMath)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/RendAR/Headers/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/assimp/include/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/bullet/src/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/glad/include/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/glfw/include/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/glm/
+                    ${PROJECT_SOURCE_DIR}/RendAR/Vendor/stb/
+CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+

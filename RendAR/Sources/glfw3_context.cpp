@@ -19,6 +19,8 @@ namespace RendAR {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
+    glfwWindowHint(GL_SAMPLES, 4);
+
     return 1;
   }
 
@@ -36,6 +38,7 @@ namespace RendAR {
     gladLoadGL();
     fprintf(stderr, "OpenGL %s\n", glGetString(GL_VERSION));
 
+    glEnable(GL_MULTISAMPLE);
     glEnable(GL_DEPTH_TEST);
 
     return 1;

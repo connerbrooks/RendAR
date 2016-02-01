@@ -131,8 +131,10 @@ namespace RendAR {
     if (textures_.empty())
       glActiveTexture(GL_TEXTURE0);
 
-    if (wireframe_)
+    if (wireframe_) {
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      glEnable(GL_LINE_SMOOTH);
+    }
 
     glBindVertexArray(VAO_);
 
@@ -143,7 +145,8 @@ namespace RendAR {
 
     glBindVertexArray(0);
 
-    if (wireframe_)
+    if (wireframe_) {
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
   }
 }

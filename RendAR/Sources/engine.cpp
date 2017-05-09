@@ -11,6 +11,14 @@ namespace RendAR
     context_->init(argc, argv, config);
     context_->showWindow();
     createScene("default");
+    scripting_ = new ScriptingEngine(argc, argv);
+  }
+
+  Engine::~Engine()
+  {
+    //delete context_;
+    delete scripting_;
+    //delete scene_;
   }
 
   void Engine::startMainLoop(void (*updateLoop)())

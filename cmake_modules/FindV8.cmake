@@ -105,7 +105,7 @@ IF(NOT UNIX)
 # but they don't seem to link correctly)
 ELSE()
     FIND_LIBRARY(V8_LIBRARY
-        NAMES v8
+        NAMES v8 libv8
         PATHS
         ${V8_DIR}
         ${V8_DIR}/lib
@@ -114,6 +114,7 @@ ELSE()
         # built (which is the default)
         ${V8_DIR}/out/ia32.release/lib.target/
         ${V8_DIR}/out/x64.release/lib.target/
+        ${V8_DIR}/out.gn/x64.release/
         $ENV{V8_DIR}
         $ENV{V8_DIR}/lib
         ~/Library/Frameworks
@@ -126,6 +127,31 @@ ELSE()
         /opt/lib
         /usr/freeware/lib64
     )
+
+    FIND_LIBRARY(V8_PLATFORM_LIBRARY
+        NAMES v8_libplatform
+        PATHS
+        ${V8_DIR}
+        ${V8_DIR}/lib
+        ${V8_DIR}/build/Release/lib
+        # Having both architectures listed is problematic if both have been
+        # built (which is the default)
+        ${V8_DIR}/out/ia32.release/lib.target/
+        ${V8_DIR}/out/x64.release/lib.target/
+        ${V8_DIR}/out.gn/x64.release/
+        $ENV{V8_DIR}
+        $ENV{V8_DIR}/lib
+        ~/Library/Frameworks
+        /Library/Frameworks
+        /usr/local/lib
+        /usr/lib
+        /sw/lib
+        /opt/local/lib
+        /opt/csw/lib
+        /opt/lib
+        /usr/freeware/lib64
+    )
+
 
     FIND_LIBRARY(V8_LIBRARY_DEBUG
         NAMES v8
@@ -158,6 +184,7 @@ FIND_LIBRARY(V8_ICUUC_LIBRARY
     ${V8_DIR}/build/Release/lib
     ${V8_DIR}/out/ia32.release/lib.target/
     ${V8_DIR}/out/x64.release/lib.target/
+    ${V8_DIR}/out.gn/x64.release/
     $ENV{V8_DIR}
     $ENV{V8_DIR}/lib
     ~/Library/Frameworks
@@ -200,6 +227,7 @@ FIND_LIBRARY(V8_ICUI18N_LIBRARY
     ${V8_DIR}/build/Release/lib
     ${V8_DIR}/out/ia32.release/lib.target/
     ${V8_DIR}/out/x64.release/lib.target/
+    ${V8_DIR}/out.gn/x64.release/
     $ENV{V8_DIR}
     $ENV{V8_DIR}/lib
     ~/Library/Frameworks
@@ -246,7 +274,6 @@ IF(NOT UNIX)
     ENDIF(V8_BASE_LIBRARY AND V8_SNAPSHOT_LIBRARY AND V8_ICUUC_LIBRARY AND V8_ICUI18N_LIBRARY AND V8_INCLUDE_DIR)
 ELSEIF(V8_LIBRARY AND V8_ICUUC_LIBRARY AND V8_ICUI18N_LIBRARY AND V8_INCLUDE_DIR)
     SET(V8_FOUND "YES")
-  message("v8 found")
 ENDIF(NOT UNIX)
 
 

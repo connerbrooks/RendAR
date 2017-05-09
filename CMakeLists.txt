@@ -3,6 +3,8 @@ project(RendAR)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules/")
 
+# TODO: better documentation for building and figure this out by default
+set(V8_DIR "/home/cbrooks/Developer/google/v8")
 find_package(V8)
 
 option(GLFW_BUILD_DOCS OFF)
@@ -65,7 +67,8 @@ add_library(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES})
 target_link_libraries(${PROJECT_NAME} assimp glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
-                      BulletDynamics BulletCollision LinearMath ${V8_LIBRARY})
+                      BulletDynamics BulletCollision LinearMath
+                      ${V8_LIBRARY} ${V8_PLATFORM_LIBRARY} ${V8_ICUI18N_LIBRARY} ${V8_ICUUC_LIBRARY})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})

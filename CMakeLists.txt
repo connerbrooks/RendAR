@@ -74,3 +74,7 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/RendAR/Headers/
                     ${PROJECT_SOURCE_DIR}/RendAR/Vendor/stb/
 CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
+
+# Example application
+add_executable(simple_scene RendAR/Samples/simple_scene.cpp)
+target_link_libraries(simple_scene ${PROJECT_NAME})

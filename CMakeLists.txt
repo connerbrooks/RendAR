@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(RendAR)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules/")
+
+find_package(V8)
+
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
@@ -33,7 +37,8 @@ include_directories(RendAR/Headers/
                     RendAR/Vendor/glad/include/
                     RendAR/Vendor/glfw/include/
                     RendAR/Vendor/glm/
-                    RendAR/Vendor/stb/)
+                    RendAR/Vendor/stb/
+                    ${V8_INCLUDE_DIR})
 
 file(GLOB VENDORS_SOURCES RendAR/Vendor/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS RendAR/Headers/*.hpp)
@@ -60,7 +65,7 @@ add_library(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES})
 target_link_libraries(${PROJECT_NAME} assimp glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
-                      BulletDynamics BulletCollision LinearMath)
+                      BulletDynamics BulletCollision LinearMath ${V8_LIBRARY})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
